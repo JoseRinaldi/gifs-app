@@ -2,13 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GifsHomeComponent } from './pages/gifs-home/gifs-home-page.component';
 import { SearchBoxComponent } from './components/search-box/search-box.component';
+import { CardListComponent } from './components/card-list/card-list.component';
 
 
 
 @NgModule({
   declarations: [
     GifsHomeComponent,
-    SearchBoxComponent
+    SearchBoxComponent,
+    CardListComponent
   ],
   imports: [
     CommonModule
@@ -16,6 +18,7 @@ import { SearchBoxComponent } from './components/search-box/search-box.component
   exports:[
     GifsHomeComponent,
     SearchBoxComponent,
+    CardListComponent
   ]
 })
 export class GifsModule { }
