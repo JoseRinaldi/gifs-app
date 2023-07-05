@@ -1,13 +1,21 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Gif, SerarchResponse } from '../interfaces/gifs.interfaces';
+import { compileNgModule } from '@angular/compiler';
+
+const GIPHY_API_KEY = 'DsXwu61TwdrV5sFBPNBkand5JApCqvI1'
 
 @Injectable({
   providedIn: 'root'
 })
 export class GifsService {
 
-  private _tagHistory : string[] = []
+  public gifList : Gif[]=[]
 
-  constructor() { }
+  private _tagHistory : string[] = []
+  private serviceUrl : string = 'https://api.giphy.com/v1/gifs'
+
+  constructor(private http : HttpClient) { }
 
   get tagsHistory(){
 
@@ -33,6 +41,19 @@ export class GifsService {
     if(tag.length === 0) return;
     this.organizationTags(tag);
 
+    const params = new HttpParams()
+    .set('api_key', GIPHY_API_KEY)
+    .set('limit','10')
+    .set('q',tag)
+
+    this.http.get<SerarchResponse>(`${ this.serviceUrl }/search?${ params }`)
+    .subscribe(resp =>{
+      //console.log(resp)
+      this.gifList = resp.data;
+
+      console.log({gifs: this.gifList});
+
+    });
 
     // this._tagHistory.unshift(tag);
 
